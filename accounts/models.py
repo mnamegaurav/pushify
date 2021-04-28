@@ -10,6 +10,7 @@ from accounts.managers import CustomUserManager
 class User(AbstractUser):
     email = models.EmailField(unique=True)
     full_name = models.CharField(max_length=255, verbose_name=_("Full Name"))
+    picture = models.ImageField(upload_to="", null=True, blank=True)
 
     first_name = None
     last_name = None

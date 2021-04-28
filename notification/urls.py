@@ -18,6 +18,7 @@ from django.urls import path, include, re_path
 from django.views.generic import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
+from django.shortcuts import render
 
 from rest_framework.routers import DefaultRouter
 
@@ -29,6 +30,9 @@ router.register("devices", FCMDeviceViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("", include("accounts.urls")),
+    path("", include("analytics.urls")),
+    path("", include("core.urls")),
     path("api/fcm/", include(router.urls)),
     re_path(
         r"^firebase-messaging-sw.js",
@@ -41,3 +45,13 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns.extend(static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))
+
+
+def error_page(request, *args, **kwargs):
+    return render(request, "404.html")
+
+
+handler404 = error_page
+handler500 = error_page
+handler403 = error_page
+handler400 = error_page

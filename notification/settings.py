@@ -120,7 +120,7 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "static"
-STATICFILES_DIRS = (BASE_DIR / "staticfiles",)
+STATICFILES_DIRS = (BASE_DIR / "static_files",)
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
@@ -141,7 +141,6 @@ except ImportError as e:
 
 if DEBUG:
     # All the settings when project is running locally
-    ALLOWED_HOSTS = ["*"]
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",

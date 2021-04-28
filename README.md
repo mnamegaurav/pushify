@@ -56,6 +56,7 @@ Create a `local_settings.py` file in the same directory where your `settings.py`
     Copy this code in your `local_settings.py` file -
     ```
     DEBUG = True
+    ALLOWED_HOSTS = ["*"]
     ```
     
 7. Creating `.env` file:
