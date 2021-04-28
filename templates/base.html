@@ -16,17 +16,19 @@
       crossorigin="anonymous"
     />
 
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+
     <link rel="manifest" href="{% static 'manifest.json' %}" />
   </head>
-  <body>
-    <!-- Header section containing title -->
-    <header class="mb-5">
-      <!-- As a link -->
-      <nav class="navbar navbar-dark bg-dark">
-        <h4 class="navbar-brand">FCM Notification</h4>
-        <div class="ml-auto">SOme Buttons</div>
-      </nav>
-    </header>
+
+  <body {% if request.user.is_authenticated %}id="page-top"{% else %}class="bg-gradient-primary"{% endif %}>
 
     {% block body_content %}{% endblock %}
 
@@ -58,6 +60,19 @@
       integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
       crossorigin="anonymous"
     ></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"%></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+
+    <!-- Page level plugins -->
+    <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
+    <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
 
     <script type="text/javascript">
       $('#liveToast').toast('hide');
