@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 
 from accounts.utils import auto_save_current_user
 
@@ -9,14 +10,25 @@ User = get_user_model()
 
 # Create your models here.
 class Notification(models.Model):
-    website = models.ForeignKey(Website, on_delete=models.CASCADE)
-    fcm_token = models.TextField()
-    title = models.CharField(max_length=300)
-    body = models.TextField()
+    class StatusChoices(models.TextChoices):
+        SUCCESS = 1, "SUCCESS"
+        FAIL = 2, "FAIL"
+        PENDING = 3, "PENDING"
+
+    website = models.ForeignKey(
+        Website, verbose_name=_("Website"), on_delete=models.CASCADE
+    )
+    title = models.CharField(max_length=300, verbose_name=_("Notification Title"))
+    body = models.TextField(verbose_name=_("Notification Body"))
     icon = models.ImageField(upload_to="notification_icons", null=True, blank=True)
     banner = models.ImageField(upload_to="notification_banner", null=True, blank=True)
     launch_url = models.URLField(max_length=500, null=True, blank=True)
-    status = models.CharField(max_length=2)
+    status = models.CharField(
+        max_length=2,
+        verbose_name=("Notification Status"),
+        choices=StatusChoices.choices,
+        default=StatusChoices.PENDING,
+    )
     created_by = models.ForeignKey(
         User,
         related_name="notification_cb",
