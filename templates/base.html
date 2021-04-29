@@ -6,7 +6,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>FCM Notification</title>
+    <title>{%if page_title %}{{ page_title }}{% else %}FCM Notification{% endif %}</title>
 
     <!-- Bootstrap CSS -->
     <!--<link
@@ -28,6 +28,8 @@
     <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet" />
 
     <link rel="manifest" href="{% static 'manifest.json' %}" />
+
+    {% block extra_css %}{% endblock extra_css %}
   </head>
 
   <body {% if request.user.is_authenticated %}id="page-top" {% else %}class="bg-gradient-primary" {% endif %}>
@@ -71,5 +73,7 @@
     <script type="text/javascript">
       $('#liveToast').toast('hide');
     </script>
+
+    {% block extra_js %}{% endblock extra_js %}
   </body>
 </html>

@@ -18,6 +18,7 @@ class Website(models.Model):
         max_length=255,
         verbose_name=_("Website Name"),
     )
+    is_active = models.BooleanField(default=True)
     created_by = models.ForeignKey(
         User,
         related_name="website_cb",
@@ -55,3 +56,6 @@ class Website(models.Model):
             self.created_by = user
         self.updated_by = user
         super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse("website_edit_view", args=[str(self.pk)])
