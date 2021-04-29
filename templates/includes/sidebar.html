@@ -68,8 +68,8 @@
     >
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Manage:</h6>
-        <a class="collapse-item" href="buttons.html">Create Notification</a>
-        <a class="collapse-item" href="buttons.html">Show All Notification</a>
+        <a class="collapse-item" href="{% url 'core:notification_add_view' %}">Create Notification</a>
+        <a class="collapse-item" href="{% url 'core:notifications_list_view' %}">Show All Notification</a>
       </div>
     </div>
   </li>

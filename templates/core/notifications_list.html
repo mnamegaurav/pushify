@@ -1,0 +1,51 @@
+{% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block page_content %}
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">{{ page_title }}</h1>
+</div>
+
+<!-- Divider -->
+<hr class="sidebar-divider mb-5" />
+
+<!-- Content Row -->
+<div class="row">
+    <div class="col-12">
+    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>S. No.</th>
+                                            <th>Title</th>
+                                            <th>Body</th>
+                                            <th>Created</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for notification_obj in object_list %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ notification_obj.title }}</td>
+                                            <td>{{ notification_obj.body }}</td>
+                                            <td>{{ notification_obj.created_on }}</td>
+                                            <td>Delete, Edit</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+        
+    </div>
+</div>
+
+{% endblock page_content %}
