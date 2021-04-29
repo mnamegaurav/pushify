@@ -1,10 +1,7 @@
-{% extends 'core/base.html' %}
-{% load crispy_forms_tags %}
-
-{% block page_content %}
+{% extends 'core/base.html' %} {% load crispy_forms_tags %} {% block page_content %}
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">{{ page_title }}</h1>
+  <h1 class="h3 mb-0 text-gray-800">{{ page_title }}</h1>
 </div>
 
 <!-- Divider -->
@@ -12,40 +9,47 @@
 
 <!-- Content Row -->
 <div class="row">
-    <div class="col-12">
+  {% for website_obj in object_list %}
+  <div class="col-12 col-md-6 col-xl-4">
     <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>S. No.</th>
-                                            <th>Title</th>
-                                            <th>Doamin</th>
-                                            <th>Last Updated</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for website_obj in object_list %}
-                                        <tr>
-                                            <td>{{ forloop.counter }}</td>
-                                            <td>{{ website_obj.title }}</td>
-                                            <td>{{ website_obj.domain }}</td>
-                                            <td>{{ website_obj.updated_on }}</td>
-                                            <td>Delete, Edit</td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-        
+      <div class="card-header bg-success py-3 d-flex flex-row align-items-center justify-content-end">
+        <div class="dropdown no-arrow">
+          <a
+            class="dropdown-toggle"
+            href="#"
+            role="button"
+            id="dropdownMenuLink{{ website_obj.pk }}"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+          </a>
+          <div
+            class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+            aria-labelledby="dropdownMenuLink{{ website_obj.pk }}"
+            style=""
+          >
+            <div class="dropdown-header">Actions:</div>
+            <a class="dropdown-item" href="{% url 'websites:website_edit_view' website_obj.slug %}">Edit</a>
+            <form action="{% url 'websites:website_delete_view' website_obj.pk %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="dropdown-item">Delete</button>
+            </form>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Help ?</a>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <h4 class="website__title">{{ website_obj.title }}</h4>
+        <p class="website__domain">{{ website_obj.domain }}</p>
+        <p class="website__subscribers__count">2 Subscribers</p>
+        <p class="website__subscribers__count">{{ website_obj.updated_on }}</p>
+      </div>
     </div>
+  </div>
+  {% endfor %}
 </div>
 
 {% endblock page_content %}
