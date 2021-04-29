@@ -30,8 +30,11 @@ router.register("devices", FCMDeviceViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    # /, /login, /register, /forgot-password
     path("", include("accounts.urls")),
+    # dashboard/,
     path("", include("analytics.urls")),
+    # website/add/, website/delete/<id>/, website/edit/<id>/, website/<id>
     path("", include("core.urls")),
     path("api/fcm/", include(router.urls)),
     re_path(
