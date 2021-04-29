@@ -1,0 +1,33 @@
+<!-- Topbar -->
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+  <!-- Sidebar Toggle (Topbar) -->
+  <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+    <i class="fa fa-bars"></i>
+  </button>
+
+  {% comment %} {% include 'includes/topbar/search.html' %} {% endcomment %}
+
+  <!-- Topbar Navbar -->
+  <ul class="navbar-nav ml-auto">
+
+    {% comment %} 
+
+    {% include 'includes/topbar/search_dropdown.html' %} 
+
+    {% include 'includes/topbar/alert.html' %} 
+    
+    {% include 'includes/topbar/messages.html' %} 
+    
+    {% endcomment %}
+
+    <div class="topbar-divider d-none d-sm-block"></div>
+
+    {% if request.user.is_authenticated %}
+      {% include 'includes/topbar/user.html' %}
+    {% else %}
+      {% include 'includes/topbar/register_buttons.html' %}
+    {% endif %}
+
+  </ul>
+</nav>
+<!-- End of Topbar -->
