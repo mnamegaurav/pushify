@@ -1,13 +1,61 @@
 {% extends 'core/base.html' %} 
 
+{% load crispy_forms_tags %} 
+
+
 {% block page_content %}
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800">Website</h1>
+  <h1 class="h3 mb-0 text-gray-800">{{ page_title }}</h1>
 </div>
+
+<!-- Divider -->
+<hr class="sidebar-divider mb-5" />
 
 <!-- Content Row -->
 <div class="row">
-{{ form.as_p }}
+  <div class="col-12 col-md-8 offset-md-2">
+    <form method="post">
+      <p class="text-muted"><small>* Required fields</small></p>
+      {% csrf_token %} {{ form|crispy }}
+      <button type="submit" class="btn btn-primary shadow" id="updateBtn" style="display: none">Update</button>
+      <button type="button" class="btn btn-secondary shadow" onclick="enableInputFields(this);" id="editBtn">Edit</button>
+      <button type="button" class="btn btn-danger shadow" onclick="cancelEdit(this);" id="cancelEditBtn" style="display: none">Cancel</button>
+    </form>
+  </div>
 </div>
-{% endblock page_content %}
+
+{% if messages %} 
+    {% for message in messages %} 
+        {% include 'includes/toast.html' %} 
+    {% endfor %} 
+{% endif %} 
+
+{% endblock page_content %} 
+
+{% block extra_js %}
+<script>
+  const inputElements = document.querySelectorAll('input');
+  inputElements.forEach((e) => {
+    e.disabled = true;
+  });
+
+  function enableInputFields(el) {
+    inputElements.forEach((e) => {
+      e.disabled = false;
+    });
+    updateBtn.style.display = 'inline-block';
+    cancelEditBtn.style.display = 'inline-block';
+    el.style.display = 'none';
+  }
+
+  function cancelEdit(el) {
+    updateBtn.style.display = 'none';
+    cancelEditBtn.style.display = 'none';
+    editBtn.style.display = 'inline-block';
+    inputElements.forEach((e) => {
+      e.disabled = true;
+    });
+  }
+</script>
+{% endblock extra_js %}

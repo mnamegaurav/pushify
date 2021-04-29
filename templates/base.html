@@ -35,19 +35,6 @@
   <body {% if request.user.is_authenticated %}id="page-top" {% else %}class="bg-gradient-primary" {% endif %}>
     {% block body_content %}{% endblock %}
 
-    <div class="position-fixed bottom-0 right-0 p-3" style="z-index: 5; right: 0; bottom: 0">
-      <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="30000">
-        <div class="toast-header">
-          <img src="" class="rounded mr-2 toast-icon" style="height: 20px" />
-          <strong class="mr-auto toast-title"></strong>
-          <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="toast-body" style="overflow-wrap: break-word"></div>
-      </div>
-    </div>
-
     <script
       src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
       integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
@@ -64,14 +51,11 @@
       crossorigin="anonymous"
     ></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}" %></script>
-
     <!-- Custom scripts for all pages-->
     <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
 
     <script type="text/javascript">
-      $('#liveToast').toast('hide');
+      $('#liveToast').toast('show');
     </script>
 
     {% block extra_js %}{% endblock extra_js %}

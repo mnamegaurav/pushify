@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # Third party apps
     "rest_framework",
     "fcm_django",
+    "crispy_forms",
     # Local apps
     "accounts.apps.AccountsConfig",
     "core.apps.CoreConfig",
@@ -155,3 +156,5 @@ if DEBUG:
 from notification.jazzmin_config import *
 from notification.fcm_config import *
 from notification.drf_config import *
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"

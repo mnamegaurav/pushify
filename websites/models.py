@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext as _
 from django.contrib.auth import get_user_model
 from django.core.validators import RegexValidator
+from django.urls import reverse_lazy
 
 from crum import get_current_user
 
@@ -11,7 +12,7 @@ User = get_user_model()
 class Website(models.Model):
     domain = models.CharField(
         max_length=255,
-        verbose_name=_("Website Doamin"),
+        verbose_name=_("Website Domain"),
         unique=True,
     )
     name = models.CharField(
@@ -58,4 +59,4 @@ class Website(models.Model):
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse("website_edit_view", args=[str(self.pk)])
+        return reverse_lazy("websites:website_edit_view", args=[str(self.pk)])
