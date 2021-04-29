@@ -8,7 +8,7 @@ class WebsiteAdmin(admin.ModelAdmin):
     model = Website
     list_display = (
         "domain",
-        "name",
+        "title",
         "created_by",
         "updated_by",
         "created_on",

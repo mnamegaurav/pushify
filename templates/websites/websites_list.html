@@ -13,9 +13,38 @@
 <!-- Content Row -->
 <div class="row">
     <div class="col-12">
-        {% for website_obj in object_list %}
-            <p>{{ website_obj }}</p><br>
-        {% endfor %}
+    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>S. No.</th>
+                                            <th>Title</th>
+                                            <th>Doamin</th>
+                                            <th>Last Updated</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for website_obj in object_list %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ website_obj.title }}</td>
+                                            <td>{{ website_obj.domain }}</td>
+                                            <td>{{ website_obj.updated_on }}</td>
+                                            <td>Delete, Edit</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+        
     </div>
 </div>
 

@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.core.validators import RegexValidator
 from django.urls import reverse_lazy
 
-from crum import get_current_user
+from accounts.utils import auto_save_current_user
 
 User = get_user_model()
 
@@ -15,9 +15,9 @@ class Website(models.Model):
         verbose_name=_("Website Domain"),
         unique=True,
     )
-    name = models.CharField(
+    title = models.CharField(
         max_length=255,
-        verbose_name=_("Website Name"),
+        verbose_name=_("Website title"),
     )
     is_active = models.BooleanField(default=True)
     created_by = models.ForeignKey(
@@ -47,15 +47,10 @@ class Website(models.Model):
         ordering = ("-created_on",)
 
     def __str__(self):
-        return self.name
+        return self.title
 
     def save(self, *args, **kwargs):
-        user = get_current_user()
-        if user and not user.pk:
-            user = None
-        if not self.pk:
-            self.created_by = user
-        self.updated_by = user
+        auto_save_current_user(self)
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
