@@ -20,23 +20,29 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.shortcuts import render
 
-from rest_framework.routers import DefaultRouter
+from notification.routers import router
 
-from fcm_django.api.rest_framework import FCMDeviceViewSet, FCMDeviceAuthorizedViewSet
-
-
-router = DefaultRouter()
-router.register("devices", FCMDeviceViewSet)
 
 urlpatterns = [
+    # admin urls
     path("admin/", admin.site.urls),
+    # ...
     # /, /login, /register, /forgot-password
     path("", include("accounts.urls")),
+    # ...
     # dashboard/,
     path("", include("analytics.urls")),
-    # website/add/, website/delete/<id>/, website/edit/<id>/, website/<id>
+    # ...
+    # notification/send, notifications
     path("", include("core.urls")),
-    path("api/fcm/", include(router.urls)),
+    # ...
+    # website/add/, website/delete/<id>/, website/edit/<id>/, website/<id>
+    path("", include("websites.urls")),
+    # ...
+    # all the api urls
+    path("api/", include(router.urls)),
+    # ...
+    # service worker file
     re_path(
         r"^firebase-messaging-sw.js",
         TemplateView.as_view(
