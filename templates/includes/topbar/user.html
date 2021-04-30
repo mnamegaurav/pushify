@@ -21,7 +21,7 @@
       <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
       Profile
     </a>
-    <a class="dropdown-item" href="{% url 'accounts:change_password_view' %}">
+    <a class="dropdown-item" href="{% url 'accounts:password_change_view' %}">
       <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
       Change Password
     </a>
@@ -32,9 +32,14 @@
     </a>
     {% endif %}
     <div class="dropdown-divider"></div>
-    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-      <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-      Logout
-    </a>
+      <div class="dropdown-item" data-toggle="modal" data-target="#logoutModal">
+        <form action="{% url 'accounts:logout_view' %}" method="POST">
+          {% csrf_token %}
+          <button type="submit">
+            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+            Logout
+          </button>
+        </form>
+      </div>
   </div>
 </li>

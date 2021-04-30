@@ -131,7 +131,10 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 AUTH_USER_MODEL = "accounts.User"
-LOGIN_URL = "login_view"
+LOGIN_URL = "accounts:login_view"
+LOGIN_REDIRECT_URL = "core:home_view"
+LOGOUT_REDIRECT_URL = LOGIN_URL
+PASSWORD_RESET_TIMEOUT = 86400
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
