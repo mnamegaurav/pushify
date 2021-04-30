@@ -1,6 +1,13 @@
 from rest_framework.routers import DefaultRouter
 
-from fcm_django.api.rest_framework import FCMDeviceViewSet, FCMDeviceAuthorizedViewSet
+from core.api.viewsets import (
+    FCMTokenDeviceViewSet,
+    FCMTokenDeviceAuthorizedViewSet,
+    FCMTokenDeviceCreateOnlyViewSet,
+)
 
 router = DefaultRouter()
-router.register("fcm/devices", FCMDeviceViewSet, basename="fcm-device")
+router.register(
+    "fcm/device/create", FCMTokenDeviceCreateOnlyViewSet, basename="fcm-token-device"
+)
+# router.register("fcm/devices", FCMTokenDeviceViewSet, basename="fcm-token-devices")

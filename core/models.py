@@ -69,11 +69,11 @@ class Notification(models.Model):
         return reverse_lazy("core:notification_detail_view", args=[str(self.pk)])
 
 
-class FCMDeviceToken(AbstractFCMDevice):
+class FCMTokenDevice(AbstractFCMDevice):
     website = models.ForeignKey(
         Website, verbose_name=_("Website"), on_delete=models.CASCADE
     )
 
     class Meta:
-        verbose_name = _("FCM device")
-        verbose_name_plural = _("FCM devices")
+        verbose_name = _("FCM Token Device")
+        verbose_name_plural = _("FCM Token Devices")
