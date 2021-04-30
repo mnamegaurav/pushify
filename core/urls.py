@@ -24,7 +24,10 @@ urlpatterns = [
     ),
     path(
         "instructions/",
-        TemplateView.as_view(template_name="core/instructions.html"),
+        TemplateView.as_view(
+            template_name="core/instructions.html",
+            extra_context={"page_title": "Instructions"},
+        ),
         name="instructions_view",
     ),
 ]
