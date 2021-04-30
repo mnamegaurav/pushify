@@ -1,0 +1,24 @@
+{% extends 'core/base.html' %} {% load crispy_forms_tags %} {% block page_content %}
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+  <h1 class="h3 mb-0 text-gray-800">{{ page_title }}</h1>
+</div>
+
+<!-- Divider -->
+<hr class="sidebar-divider mb-5" />
+
+<!-- Content Row -->
+<div class="row">
+  <div class="col-12 col-lg-6 offset-lg-3">
+    <div class="card shadow mb-4 border-bottom-info">
+      <div class="card-header bg-info py-3">
+        <h6 class="m-0 font-weight-bold text-light">Notification</h6>
+      </div>
+      <div class="card-body">
+        {{ object.title }}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock page_content %}

@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 
 from core.views import (
     NotificationAddView,
+    NotificationDetailView,
     NotificationsListView,
 )
 
@@ -18,6 +19,11 @@ urlpatterns = [
         "notifications/",
         NotificationsListView.as_view(),
         name="notifications_list_view",
+    ),
+    path(
+        "notification/<int:pk>/",
+        NotificationDetailView.as_view(),
+        name="notification_detail_view",
     ),
     path(
         "notification/add/", NotificationAddView.as_view(), name="notification_add_view"
