@@ -36,7 +36,7 @@ urlpatterns = [
     # notification/send, notifications
     path("", include("core.urls")),
     # ...
-    # website/add/, website/delete/<id>/, website/edit/<id>/, website/<id>
+    # website/add/, website/delete/<id>/, website/<id>/
     path("", include("websites.urls")),
     # ...
     # all the api urls
