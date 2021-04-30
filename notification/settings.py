@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "fcm_django",
     "crispy_forms",
+    "django_celery_beat",
+    "django_celery_results",
     # Local apps
     "accounts.apps.AccountsConfig",
     "core.apps.CoreConfig",
@@ -129,8 +131,16 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 AUTH_USER_MODEL = "accounts.User"
+LOGIN_URL = "login_view"
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+        "LOCATION": "django_cache_table",
+    }
+}
 
 """
 If you are running locally-
@@ -150,11 +160,27 @@ if DEBUG:
             "NAME": BASE_DIR / "db.sqlite3",
         }
     }
+    MIDDLEWARE.extend(
+        [
+            "debug_toolbar.middleware.DebugToolbarMiddleware",
+        ]
+    )
+    INSTALLED_APPS.extend(
+        [
+            "django_extensions",
+            "debug_toolbar",
+        ]
+    )
+    # INTERNAL_IPS = [
+    #     "127.0.0.1",
+    # ]
 
 
 # Other Settings and Configs
 from notification.jazzmin_config import *
 from notification.fcm_config import *
 from notification.drf_config import *
+from notification.celery_config import *
+
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
