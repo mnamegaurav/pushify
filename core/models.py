@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
+from fcm_django.models import AbstractFCMDevice
+
 from accounts.utils import auto_save_current_user
 
 from websites.models import Website
@@ -65,3 +67,13 @@ class Notification(models.Model):
 
     def get_absolute_url(self):
         return reverse_lazy("core:notification_detail_view", args=[str(self.pk)])
+
+
+class FCMDeviceToken(AbstractFCMDevice):
+    website = models.ForeignKey(
+        Website, verbose_name=_("Website"), on_delete=models.CASCADE
+    )
+
+    class Meta:
+        verbose_name = _("FCM device")
+        verbose_name_plural = _("FCM devices")
