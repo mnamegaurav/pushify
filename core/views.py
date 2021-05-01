@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import CreateView, ListView, DetailView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from core.models import Notification
 from core.forms import NotificationForm
@@ -9,7 +10,7 @@ from core.tasks import send_notifications_in_bulk_task
 # Create your views here.
 
 
-class NotificationAddView(SuccessMessageMixin, CreateView):
+class NotificationAddView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     template_name = "core/notification_add_form.html"
     form_class = NotificationForm
     extra_context = {"page_title": "Add Notification"}
@@ -67,13 +68,13 @@ class NotificationAddView(SuccessMessageMixin, CreateView):
             return self.form_invalid(form)
 
 
-class NotificationDetailView(DetailView):
+class NotificationDetailView(LoginRequiredMixin, DetailView):
     template_name = "core/notification_detail.html"
     extra_context = {"page_title": "Notification Detail"}
     queryset = Notification.objects.all()
 
 
-class NotificationsListView(ListView):
+class NotificationsListView(LoginRequiredMixin, ListView):
     template_name = "core/notifications_list.html"
     extra_context = {"page_title": "Notifications"}
     queryset = Notification.objects.all()

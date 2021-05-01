@@ -1,6 +1,7 @@
 from django.urls import path
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import (
     LoginView,
     PasswordResetView,
@@ -70,18 +71,22 @@ urlpatterns = [
     ),
     path(
         "password/change/",
-        PasswordChangeView.as_view(
-            template_name="accounts/password_change.html",
-            success_url=reverse_lazy("accounts:password_change_done_view"),
-            extra_context={"page_title": "Change Password"},
+        login_required(
+            PasswordChangeView.as_view(
+                template_name="accounts/password_change.html",
+                success_url=reverse_lazy("accounts:password_change_done_view"),
+                extra_context={"page_title": "Change Password"},
+            )
         ),
         name="password_change_view",
     ),
     path(
         "password/change/done/",
-        PasswordResetDoneView.as_view(
-            template_name="accounts/password_change_done.html",
-            extra_context={"page_title": "Change Password"},
+        login_required(
+            PasswordResetDoneView.as_view(
+                template_name="accounts/password_change_done.html",
+                extra_context={"page_title": "Change Password"},
+            )
         ),
         name="password_change_done_view",
     ),
