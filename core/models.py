@@ -15,8 +15,10 @@ User = get_user_model()
 class Notification(models.Model):
     class StatusChoices(models.TextChoices):
         SUCCESS = 1, "SUCCESS"
-        FAIL = 2, "FAIL"
+        FAIL = 2, "FAILURE"
         PENDING = 3, "PENDING"
+        STARTED = 4, "STARTED"
+        RETRY = 5, "RETRY"
 
     website = models.ForeignKey(
         Website, verbose_name=_("Website"), on_delete=models.CASCADE

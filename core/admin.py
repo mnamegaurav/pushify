@@ -13,6 +13,7 @@ admin.site.unregister(FCMDevice)
 @admin.register(Notification)
 class NotificationAdmin(admin.ModelAdmin):
     model = Notification
+    list_display = ("title", "status", "website", "created_on")
 
 
 @admin.register(FCMTokenDevice)
