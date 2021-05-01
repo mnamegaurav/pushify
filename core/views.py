@@ -44,7 +44,7 @@ class NotificationAddView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
             banner_url = None
 
         try:
-            send_notifications_in_bulk_task.apply_async(
+            task = send_notifications_in_bulk_task.apply_async(
                 args=(website_id,),
                 kwargs={
                     "title": title,
@@ -54,11 +54,11 @@ class NotificationAddView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
                     "banner_url": banner_url,
                 },
             )
-            print("sent the notification booyah!")
-            return True
+            print(f"sent the notification booyah! {task.state}")
         except Exception as e:
             print(f"Error Executing the send notification task: \n{e}")
-            return False
+
+        return
 
     def post(self, request, *args, **kwargs):
         """
