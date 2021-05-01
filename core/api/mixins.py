@@ -27,7 +27,7 @@ class DeviceSerializerMixin(ModelSerializer):
         #     "type",
         # )
         read_only_fields = ("date_created",)
-        exclude = ("user",)
+        exclude = ("user", "website")
         extra_kwargs = {"active": {"default": True}}
 
 
@@ -87,6 +87,7 @@ class DeviceViewSetMixin(object):
     lookup_field = "registration_id"
 
     def perform_create(self, serializer):
+        client_origin = self.request._request.META.get("HTTP_ORIGIN")
         if self.request.user.is_authenticated:
             if SETTINGS["ONE_DEVICE_PER_USER"] and self.request.data.get(
                 "active", True

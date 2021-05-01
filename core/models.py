@@ -74,7 +74,12 @@ class Notification(models.Model):
 
 class FCMTokenDevice(AbstractFCMDevice):
     website = models.ForeignKey(
-        Website, verbose_name=_("Website"), on_delete=models.CASCADE
+        Website,
+        verbose_name=_("Website"),
+        on_delete=models.CASCADE,
+        related_name="fcmtokendevice_website",
+        null=True,
+        blank=True,
     )
 
     class Meta:

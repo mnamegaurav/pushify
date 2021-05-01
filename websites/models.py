@@ -5,6 +5,8 @@ from django.contrib.auth import get_user_model
 from django.core.validators import RegexValidator
 from django.urls import reverse_lazy
 
+from urllib.parse import urlparse
+
 from accounts.utils import auto_save_current_user
 
 User = get_user_model()
@@ -13,12 +15,14 @@ User = get_user_model()
 class Website(models.Model):
     domain = models.CharField(
         max_length=255,
-        verbose_name=_("Website Domain"),
+        verbose_name=_("Website URL"),
+        help_text=_("Website URL i.e. - https://example.com/"),
         unique=True,
     )
     title = models.CharField(
         max_length=255,
         verbose_name=_("Website title"),
+        help_text=_("Give a title to this website."),
     )
     slug = models.SlugField(editable=False, unique=True)
     is_active = models.BooleanField(default=True)
@@ -57,7 +61,13 @@ class Website(models.Model):
             self.slug = slugify(self.title)
         except Exception as e:
             self.slug = f"{slugify(self.title)}-{self.pk}"
-        super().save(*args, **kwargs)
+        self.domain = urlparse(self.domain).netloc
+        return super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse_lazy("websites:website_edit_view", args=[str(self.slug)])
+
+    @property
+    def subscribers_count(self):
+        count = self.fcmtokendevice_website.count()
+        return count
