@@ -1,4 +1,5 @@
 {% extends 'base.html' %} 
+{% load crispy_forms_tags %} 
 
 {% block body_content %}
 
@@ -15,8 +16,9 @@
                 <div class="text-center">
                   <h1 class="h4 text-gray-900 mb-4">Welcome</h1>
                 </div>
-                <form class="user">
-                  <div class="form-group">
+                <form class="user" method='POST'>
+                  {% csrf_token %} {{ form|crispy }}
+                  {% comment %} <div class="form-group">
                     <input
                       type="email"
                       class="form-control form-control-user"
@@ -38,8 +40,8 @@
                       <input type="checkbox" class="custom-control-input" id="customCheck" />
                       <label class="custom-control-label" for="customCheck">Remember Me</label>
                     </div>
-                  </div>
-                  <button type="submit" class="btn btn-primary btn-user btn-block">Login</button>
+                  </div> {% endcomment %}
+                  <button type="submit" class="btn btn-primary shadow-sm btn-block">Login</button>
                   {% comment %}
                   <hr />
                   <a href="index.html" class="btn btn-google btn-user btn-block">

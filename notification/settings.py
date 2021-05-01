@@ -135,6 +135,8 @@ LOGIN_URL = "accounts:login_view"
 LOGIN_REDIRECT_URL = "core:home_view"
 LOGOUT_REDIRECT_URL = LOGIN_URL
 PASSWORD_RESET_TIMEOUT = 86400
+# Custom property
+MIN_USERNAME_LENGTH = 5
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
@@ -144,6 +146,9 @@ CACHES = {
         "LOCATION": "django_cache_table",
     }
 }
+
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = "emails"  # change this to a proper location
 
 # Other Settings and Configs
 from notification.jazzmin_config import *
