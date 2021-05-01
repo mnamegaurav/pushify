@@ -9,8 +9,12 @@ from rest_framework.serializers import (
 
 from fcm_django.settings import FCM_DJANGO_SETTINGS as SETTINGS
 
+from urllib.parse import urlparse
+
 from core.models import FCMTokenDevice
 from core.api.permissions import IsOwner
+
+from websites.models import Website
 
 
 # Mixins
@@ -88,6 +92,7 @@ class DeviceViewSetMixin(object):
 
     def perform_create(self, serializer):
         client_origin = self.request._request.META.get("HTTP_ORIGIN")
+
         if self.request.user.is_authenticated:
             if SETTINGS["ONE_DEVICE_PER_USER"] and self.request.data.get(
                 "active", True
@@ -96,6 +101,12 @@ class DeviceViewSetMixin(object):
                     active=False
                 )
             return serializer.save(user=self.request.user)
+
+        if client_origin:
+            client_domain = urlparse(client_origin).netloc
+            client_website = Website.objects.filter(domain=client_domain)
+            return serializer.save(website=client_website[0] or None)
+
         return serializer.save()
 
     def perform_update(self, serializer):
