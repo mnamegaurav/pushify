@@ -2,12 +2,17 @@ from django.shortcuts import render
 from django.views.generic import CreateView, ListView, DetailView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import TemplateView
 
 from core.models import Notification
 from core.forms import NotificationForm
 from core.tasks import send_notifications_in_bulk_task
 
 # Create your views here.
+
+
+class HomeView(LoginRequiredMixin, TemplateView):
+    template_name = "core/home.html"
 
 
 class NotificationAddView(LoginRequiredMixin, SuccessMessageMixin, CreateView):

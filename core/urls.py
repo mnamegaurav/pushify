@@ -2,6 +2,7 @@ from django.urls import path
 from django.views.generic import TemplateView
 
 from core.views import (
+    HomeView,
     NotificationAddView,
     NotificationDetailView,
     NotificationsListView,
@@ -12,7 +13,7 @@ app_name = "core"
 urlpatterns = [
     path(
         "dashboard/",
-        TemplateView.as_view(template_name="core/home.html"),
+        HomeView.as_view(),
         name="home_view",
     ),
     path(

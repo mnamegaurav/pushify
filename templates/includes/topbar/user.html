@@ -32,14 +32,8 @@
     </a>
     {% endif %}
     <div class="dropdown-divider"></div>
-      <div class="dropdown-item" data-toggle="modal" data-target="#logoutModal">
-        <form action="{% url 'accounts:logout_view' %}" method="POST">
-          {% csrf_token %}
-          <button type="submit" class="btn">
-            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-            Logout
-          </button>
-        </form>
-      </div>
+      <a class="dropdown-item text-center btn btn-lg text-muted" data-toggle="modal" data-target="#logoutModal" href='#'>
+        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>Logout
+      </a>
   </div>
 </li>
