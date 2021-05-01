@@ -32,12 +32,9 @@
           >
             <div class="dropdown-header">Actions:</div>
             <a class="dropdown-item" href="{% url 'websites:website_edit_view' website_obj.slug %}">Edit</a>
-            <form action="{% url 'websites:website_delete_view' website_obj.pk %}" method="POST">
-              {% csrf_token %}
-              <button type="submit" class="dropdown-item">Delete</button>
-            </form>
+            <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#websiteDeleteModal{{ website_obj.pk }}">Delete</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Help ?</a>
+            <a class="dropdown-item" href="javascript:void(0)">Help ?</a>
           </div>
         </div>
       </div>
@@ -49,6 +46,7 @@
       </div>
     </div>
   </div>
+  {% include 'includes/modals/website_delete_modal.html' %} 
   {% endfor %}
 </div>
 

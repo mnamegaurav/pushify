@@ -28,6 +28,7 @@
 {% endblock page_content %} 
 
 {% block extra_js %}
+{{ block.super }}
 <script>
   const inputElements = document.querySelectorAll('input');
   inputElements.forEach((e) => {
