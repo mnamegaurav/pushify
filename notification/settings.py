@@ -145,6 +145,12 @@ CACHES = {
     }
 }
 
+# Other Settings and Configs
+from notification.jazzmin_config import *
+from notification.fcm_config import *
+from notification.drf_config import *
+from notification.celery_config import *
+
 """
 If you are running locally-
     1. Create a 'local_settings.py' in the same location of 'settings.py'
@@ -177,13 +183,6 @@ if DEBUG:
     # INTERNAL_IPS = [
     #     "127.0.0.1",
     # ]
-
-
-# Other Settings and Configs
-from notification.jazzmin_config import *
-from notification.fcm_config import *
-from notification.drf_config import *
-from notification.celery_config import *
 
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"

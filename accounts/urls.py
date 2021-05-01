@@ -16,15 +16,15 @@ app_name = "accounts"
 urlpatterns = [
     path(
         "",
-        TemplateView.as_view(template_name="accounts/register.html"),
-        name="register_view",
-    ),
-    path(
-        "login/",
         TemplateView.as_view(
             template_name="accounts/login.html", extra_context={"page_title": "Login"}
         ),
         name="login_view",
+    ),
+    path(
+        "register/",
+        TemplateView.as_view(template_name="accounts/register.html"),
+        name="register_view",
     ),
     path(
         "logout/",
