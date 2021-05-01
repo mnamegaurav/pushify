@@ -48,8 +48,8 @@ class Notification(models.Model):
     updated_on = models.DateTimeField(auto_now=True)
 
     class Meta:
-        verbose_name = "Notification"
-        verbose_name_plural = "Notifications"
+        verbose_name = "Notification History"
+        verbose_name_plural = "Notification Histories"
         ordering = ("-created_on",)
 
     def __str__(self):
