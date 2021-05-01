@@ -11,8 +11,9 @@
 <div class="row">
   <div class="col-12 col-lg-6 offset-lg-3">
     <div class="card shadow mb-4 border-bottom-info">
-      <div class="card-header bg-info py-3">
+      <div class="card-header bg-info py-3 d-flex justify-content-between">
         <h6 class="m-0 font-weight-bold text-light">Notification</h6>
+        <h6 class="m-0 font-weight-bold text-warning">{{ object.status }}</h6>
       </div>
       {% if object.banner %}
       <img src="{{ object.banner.url }}" class="card-img-top" alt="Banner Image" />

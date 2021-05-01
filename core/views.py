@@ -4,6 +4,8 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 
+from django_celery_results.models import TaskResult
+
 from core.models import Notification
 from core.forms import NotificationForm
 from core.tasks import send_notifications_in_bulk_task
@@ -55,10 +57,11 @@ class NotificationAddView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
                 },
             )
             print(f"sent the notification booyah! {task.state}")
+            return task.id
         except Exception as e:
             print(f"Error Executing the send notification task: \n{e}")
 
-        return
+        return None
 
     def post(self, request, *args, **kwargs):
         """
@@ -67,7 +70,16 @@ class NotificationAddView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         """
         form = self.get_form()
         if form.is_valid():
-            self.push_celery_task(form)
+
+            # send the task to celery
+            task_id = self.push_celery_task(form)
+            # print(task_id)
+            # if task_id:
+            #     # get the task status and save in form
+            #     task_result = TaskResult.objects.filter(task_id=task_id)[0]
+            #     # expecting that later in form_valid save() method will be called
+            #     form.instance.task_result = task_result
+
             return self.form_valid(form)
         else:
             return self.form_invalid(form)

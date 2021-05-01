@@ -13,7 +13,12 @@ admin.site.unregister(FCMDevice)
 @admin.register(Notification)
 class NotificationAdmin(admin.ModelAdmin):
     model = Notification
-    list_display = ("title", "status", "website", "created_on")
+    list_display = ("title", "get_status", "website", "created_on")
+
+    def get_status(self, obj):
+        return obj.status
+
+    get_status.short_description = "Notification Task Status"
 
 
 @admin.register(FCMTokenDevice)

@@ -32,7 +32,7 @@
               <tr>
                 <td>{{ forloop.counter }}</td>
                 <td>{{ notification_obj.title }}</td>
-                <td>{{ notification_obj.get_status_display }}</td>
+                <td>{{ notification_obj.status }}</td>
                 <td>{{ notification_obj.website }}</td>
                 <td>{{ notification_obj.created_on }}</td>
                 <td><a class="btn btn-sm shadow-sm nav-link" href={% url 'core:notification_detail_view' notification_obj.pk  %}>View</a></td>

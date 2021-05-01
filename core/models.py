@@ -5,16 +5,13 @@ from django.urls import reverse_lazy
 
 from fcm_django.models import AbstractFCMDevice
 
-from celery import states
+from django_celery_results.models import TaskResult
 
 from accounts.utils import auto_save_current_user
 
 from websites.models import Website
 
 User = get_user_model()
-
-ALL_STATES = sorted(states.ALL_STATES)
-TASK_STATE_CHOICES = sorted(zip(ALL_STATES, ALL_STATES))
 
 # Create your models here.
 class Notification(models.Model):
@@ -26,13 +23,8 @@ class Notification(models.Model):
     icon = models.ImageField(upload_to="notification_icons", null=True, blank=True)
     banner = models.ImageField(upload_to="notification_banner", null=True, blank=True)
     launch_url = models.URLField(max_length=500, null=True, blank=True)
-    status = models.CharField(
-        max_length=50,
-        default=states.PENDING,
-        db_index=True,
-        choices=TASK_STATE_CHOICES,
-        verbose_name=_("Notification Task Status"),
-        help_text=_("Current state of the notification task being run"),
+    task_result = models.ForeignKey(
+        TaskResult, on_delete=models.CASCADE, null=True, blank=True
     )
     created_by = models.ForeignKey(
         User,
@@ -69,6 +61,12 @@ class Notification(models.Model):
 
     def get_absolute_url(self):
         return reverse_lazy("core:notification_detail_view", args=[str(self.pk)])
+
+    @property
+    def status(self):
+        if self.task_result:
+            return self.task_result.get_status_display()
+        return None
 
 
 class FCMTokenDevice(AbstractFCMDevice):
