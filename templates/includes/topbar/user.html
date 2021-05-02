@@ -1,3 +1,5 @@
+{% load static %}
+
 <!-- Nav Item - User Information -->
 <li class="nav-item dropdown no-arrow">
   <a
@@ -12,7 +14,7 @@
     <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ request.user.full_name }}</span>
     <img
       class="img-profile rounded-circle"
-      src="{%  if request.user.picture %}{{ request.user.picture.url }}{% else %}https://img.icons8.com/plasticine/2x/user-male-circle.png{% endif %}"
+      src="{%  if request.user.picture %}{{ request.user.picture.url }}{% else %}{% static 'img/undraw_profile.svg' %}{% endif %}"
     />
   </a>
   <!-- Dropdown - User Information -->

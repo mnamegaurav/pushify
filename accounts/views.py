@@ -26,7 +26,7 @@ class CustomLoginView(LoginView):
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return redirect(request.META.get("HTTP_REFERER") or "core:home_view")
-        return super.get(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)
 
 
 class RegisterView(View):
