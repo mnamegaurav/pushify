@@ -21,9 +21,8 @@
               <tr>
                 <th>S. No.</th>
                 <th>Title</th>
+                <th>Total/Sent</th>
                 <th>Status</th>
-                <th>Website</th>
-                <th>Created</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -32,9 +31,8 @@
               <tr>
                 <td>{{ forloop.counter }}</td>
                 <td>{{ notification_obj.title }}</td>
+                <td>{{ notification_obj.total_sent_count }}/{{ notification_obj.success_count }}</td>
                 <td>{{ notification_obj.status }}</td>
-                <td>{{ notification_obj.website }}</td>
-                <td>{{ notification_obj.created_on }}</td>
                 <td class="text-center">
                   <a class="btn btn-sm shadow-sm" href="{% url 'core:notification_detail_view' notification_obj.pk  %}">View</a>
                   <a class="btn btn-sm shadow-sm" href="{% url 'core:notification_add_view' %}?notification_id={{ notification_obj.pk }}">
