@@ -9,7 +9,7 @@
 >
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header pt-3 pb-0">
         <h5 class="modal-title" id="websiteDeleteModalLabel">Are you sure ? </h5>
         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
@@ -19,11 +19,11 @@
         Select delete button to delete the website with domain "{{ website_obj.domain }}".
         <p><strong>Note: </strong> All the notifications associated with this website will be deleted.</p>
     </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary shadow-sm" type="button" data-dismiss="modal">Cancel</button>
+      <div class="modal-footer py-2">
+        <button class="btn btn-sm btn-secondary shadow-sm" type="button" data-dismiss="modal">Cancel</button>
         <form action="{% url 'websites:website_delete_view' website_obj.pk %}" method="POST">
             {% csrf_token %}
-          <button type="submit" class="btn btn-danger shadow-sm">
+          <button type="submit" class="btn btn-sm btn-danger shadow-sm">
             <i class="fas fa-trash fa-sm fa-fw mr-2"></i>
             Delete
           </button>
