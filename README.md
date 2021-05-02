@@ -62,12 +62,19 @@
     Just rename this file to `.env`.
 
 8. Start RabbitMQ server:
+
+    - On Linux based OS:
     
-    Install `rabbitmq-server` package in ubuntu server, start the background service by running this command.
+    Install `rabbitmq-server` package in your local system, start the background service by running this command on Linux.
 
     ```bash
     $ sudo systemctl start rabbitmq
     ```
+
+    - On Windows based OS:
+
+    Please follow this link for setting up the rabbitmq server in your local system.
+    https://www.rabbitmq.com/install-windows.html
 
 9. Run these commands command before starting the development server:
 
