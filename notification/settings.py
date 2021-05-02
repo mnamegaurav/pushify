@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     "corsheaders",
     "fcm_django",
     "crispy_forms",
-    "django_celery_beat",
     "django_celery_results",
     # Local apps
     "accounts.apps.AccountsConfig",
