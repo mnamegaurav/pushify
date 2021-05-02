@@ -50,30 +50,26 @@
     ```
 
 6. Creating local settings:
-    Create a `local_settings.py` file in the same directory where your `settings.py` resides.
+    
+    There is a file in the notification directory where your `settings.py` resides, named `local_settings.example.py`.
 
-    Copy this code in your `local_settings.py` file -
-    ```python
-    DEBUG = True
-    ALLOWED_HOSTS = ["*"]
-    ```
+    Just rename this file to `local_settings.py`.
     
 7. Creating `.env` file:
-    Create a `.env` file in the same directory where your `manage.py` resides.
+    
+    There is a file in the base directory where your `manage.py` resides, named `.env.example`.
 
-    Copy this text in your `.env` file -
-    ```python
-    SECRET_KEY = 'secretkey'
-    ```
+    Just rename this file to `.env`.
 
 8. Start RabbitMQ server:
+    
     Install `rabbitmq-server` package in ubuntu server, start the background service by running this command.
 
     ```bash
     $ sudo systemctl start rabbitmq
     ```
 
-9. Run the these commands command:
+9. Run these commands command before starting the development server:
 
     ```bash
     $ python manage.py migrate
@@ -81,7 +77,7 @@
     $ python manage.py collectstatic
     ```
 
-10. Run celery server:
+10. Run celery server with this command:
 
     ```bash
     $ celery -A notification worker -l info
