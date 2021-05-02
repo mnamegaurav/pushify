@@ -24,6 +24,7 @@
           <img src="{{ object.icon.url }}" height="30" class="img-responsive mb-2" />
           {% endif %} {{ object.title }}
         </h3>
+        <p><strong>Total/Sent:&nbsp;</strong>{{ object.total_sent_count }}/{{ object.success_count }}</p>
         <p>{{ object.body }}</p>
         {% if object.launch_url %}
         <a href="{{ object.launch_url }}"><p class="text-muted">{{ object.launch_url }}</p></a>

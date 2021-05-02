@@ -77,6 +77,10 @@ class Notification(models.Model):
             status = "UNKNOWN"
         return status
 
+    @property
+    def total_sent_count(self):
+        return self.success_count + self.failure_count
+
 
 class FCMTokenDevice(AbstractFCMDevice):
     website = models.ForeignKey(
