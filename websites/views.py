@@ -5,36 +5,55 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
 from websites.models import Website
-
 from websites.forms import WebsiteForm
+from websites.mixins import QuerySetMixin
 
 # Create your views here.
 
 
-class WebsiteAddView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+class WebsiteAddView(
+    LoginRequiredMixin, SuccessMessageMixin, QuerySetMixin, CreateView
+):
+    model = Website
     template_name = "websites/website_add_form.html"
     form_class = WebsiteForm
     extra_context = {"page_title": "Add Website"}
     success_message = "Successfully added the website"
 
+    def get_queryset(self):
+        return self.get_website_queryset()
 
-class WebsiteEditView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+
+class WebsiteEditView(
+    LoginRequiredMixin, SuccessMessageMixin, QuerySetMixin, UpdateView
+):
+    model = Website
     template_name = "websites/website_edit_form.html"
     form_class = WebsiteForm
     slug_field = "slug"
     slug_url_kwarg = "slug"
     extra_context = {"page_title": "Website Details"}
     success_message = "Successfully saved the changes"
-    queryset = Website.objects.filter(is_active=True)
+
+    def get_queryset(self):
+        return self.get_website_queryset()
 
 
-class WebsiteDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+class WebsiteDeleteView(
+    LoginRequiredMixin, SuccessMessageMixin, QuerySetMixin, DeleteView
+):
     model = Website
     success_message = "Successfully deleted the website"
     success_url = reverse_lazy("websites:websites_list_view")
 
+    def get_queryset(self):
+        return self.get_website_queryset()
 
-class WebsitesListView(LoginRequiredMixin, ListView):
+
+class WebsitesListView(LoginRequiredMixin, QuerySetMixin, ListView):
+    model = Website
     template_name = "websites/websites_list.html"
     extra_context = {"page_title": "My Websites"}
-    queryset = Website.objects.filter(is_active=True)
+
+    def get_queryset(self):
+        return self.get_website_queryset()

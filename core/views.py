@@ -11,6 +11,7 @@ from django_celery_results.models import TaskResult
 from core.models import Notification
 from core.forms import NotificationForm
 from core.tasks import send_notifications_in_bulk_task
+from core.mixins import QuerySetMixin
 
 # Create your views here.
 
@@ -19,12 +20,14 @@ class HomeView(LoginRequiredMixin, TemplateView):
     template_name = "core/home.html"
 
 
-class NotificationAddView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+class NotificationAddView(
+    LoginRequiredMixin, SuccessMessageMixin, QuerySetMixin, CreateView
+):
+    model = Notification
     template_name = "core/notification_add_form.html"
     form_class = NotificationForm
     extra_context = {"page_title": "Add Notification"}
     success_message = "Notifications are in queue, we are just sending it."
-    queryset = Notification.objects.all()
 
     def push_celery_task(self, form):
         # send this data to the notification task
@@ -69,7 +72,9 @@ class NotificationAddView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         query_notification_id = request.GET.get("notification_id")
         if query_notification_id:
             try:
-                notification_obj = Notification.objects.get(pk=query_notification_id)
+                notification_obj = Notification.objects.get(
+                    pk=query_notification_id, created_by=request.user
+                )
                 notification_obj_dict = model_to_dict(notification_obj)
                 self.initial = notification_obj_dict
             except ObjectDoesNotExist:
@@ -94,14 +99,26 @@ class NotificationAddView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         else:
             return self.form_invalid(form)
 
+    def get_queryset(self):
+        queryset = Notification.objects.filter(created_by=self.request.user)
+        return queryset
 
-class NotificationDetailView(LoginRequiredMixin, DetailView):
+
+class NotificationDetailView(LoginRequiredMixin, QuerySetMixin, DetailView):
+    model = Notification
     template_name = "core/notification_detail.html"
     extra_context = {"page_title": "Notification Detail"}
-    queryset = Notification.objects.all()
+
+    def get_queryset(self):
+        queryset = Notification.objects.filter(created_by=self.request.user)
+        return queryset
 
 
-class NotificationsListView(LoginRequiredMixin, ListView):
+class NotificationsListView(LoginRequiredMixin, QuerySetMixin, ListView):
+    model = Notification
     template_name = "core/notifications_list.html"
     extra_context = {"page_title": "Notifications"}
-    queryset = Notification.objects.all()
+
+    def get_queryset(self):
+        queryset = Notification.objects.filter(created_by=self.request.user)
+        return queryset
