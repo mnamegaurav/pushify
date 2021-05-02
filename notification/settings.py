@@ -154,7 +154,7 @@ EMAIL_FILE_PATH = "emails"  # change this to a proper location
 
 # Other Settings and Configs
 from notification.jazzmin_config import *
-from notification.fcm_config import *
+from notification.fcm_django_config import *
 from notification.drf_config import *
 from notification.celery_config import *
 
