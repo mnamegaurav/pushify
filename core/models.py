@@ -23,6 +23,12 @@ class Notification(models.Model):
     icon = models.ImageField(upload_to="notification_icons", null=True, blank=True)
     banner = models.ImageField(upload_to="notification_banner", null=True, blank=True)
     launch_url = models.URLField(max_length=500, null=True, blank=True)
+    success_count = models.PositiveBigIntegerField(
+        verbose_name=_("Successfully Sent Count"), default=0, editable=False
+    )
+    failure_count = models.PositiveBigIntegerField(
+        verbose_name=_("Failed to Sent Count"), default=0, editable=False
+    )
     task_result = models.ForeignKey(
         TaskResult, on_delete=models.CASCADE, null=True, blank=True
     )
