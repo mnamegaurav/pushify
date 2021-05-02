@@ -19,5 +19,7 @@ def send_notifications_in_bulk_task(website_id, *args, **kwargs):
         notification_obj.save(update_fields=["success_count", "failure_count"])
     except ObjectDoesNotExist:
         pass
+    except Exception as e:
+        print(e)
 
     return

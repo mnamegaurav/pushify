@@ -5,8 +5,6 @@ from django.contrib.auth import get_user_model
 from django.core.validators import RegexValidator
 from django.urls import reverse_lazy
 
-from urllib.parse import urlparse
-
 from accounts.utils import auto_save_current_user
 
 User = get_user_model()

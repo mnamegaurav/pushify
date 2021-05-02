@@ -3,7 +3,6 @@ from django.views.generic import TemplateView
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import (
-    LoginView,
     PasswordResetView,
     PasswordResetDoneView,
     PasswordResetConfirmView,
@@ -12,16 +11,14 @@ from django.contrib.auth.views import (
     PasswordChangeDoneView,
 )
 
-from accounts.views import RegisterView, CustomLogoutView
+from accounts.views import CustomLoginView, RegisterView, CustomLogoutView
 
 app_name = "accounts"
 
 urlpatterns = [
     path(
         "",
-        LoginView.as_view(
-            template_name="accounts/login.html", extra_context={"page_title": "Login"}
-        ),
+        CustomLoginView.as_view(),
         name="login_view",
     ),
     path(

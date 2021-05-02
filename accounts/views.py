@@ -10,13 +10,23 @@ from django.contrib.auth import (
     get_user_model,
 )
 
-from django.contrib.auth.views import LogoutView
+from django.contrib.auth.views import LoginView, LogoutView
 
 from accounts.forms import CustomUserCreationForm
 
 # Create your views here.
 
 User = get_user_model()
+
+
+class CustomLoginView(LoginView):
+    template_name = "accounts/login.html"
+    extra_context = {"page_title": "Login"}
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect(request.META.get("HTTP_REFERER") or "core:home_view")
+        return super.get(request, *args, **kwargs)
 
 
 class RegisterView(View):
@@ -28,7 +38,7 @@ class RegisterView(View):
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect(request.META.get("HTTP_REFERER"))
+            return redirect(request.META.get("HTTP_REFERER") or "core:home_view")
         context = {"form": self.form_class()}
         return render(request, self.template_name, context)
 

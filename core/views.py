@@ -13,6 +13,8 @@ from core.forms import NotificationForm
 from core.tasks import send_notifications_in_bulk_task
 from core.mixins import PermissionQuerySetMixin
 
+from websites.models import Website
+
 # Create your views here.
 
 
@@ -68,18 +70,26 @@ class NotificationAddView(
 
         return None
 
-    def get(self, request, *args, **kwargs):
-        query_notification_id = request.GET.get("notification_id")
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class=form_class)
+        form.fields["website"].queryset = Website.objects.filter(
+            is_active=True, created_by=self.request.user
+        )
+        return form
+
+    def get_initial(self):
+        initial = super().get_initial()
+        query_notification_id = self.request.GET.get("notification_id")
         if query_notification_id:
             try:
                 notification_obj = Notification.objects.get(
-                    pk=query_notification_id, created_by=request.user
+                    pk=query_notification_id, created_by=self.request.user
                 )
                 notification_obj_dict = model_to_dict(notification_obj)
-                self.initial = notification_obj_dict
+                initial.update(notification_obj_dict)
             except ObjectDoesNotExist:
                 pass
-        return super().get(request, *args, **kwargs)
+        return initial
 
     def post(self, request, *args, **kwargs):
         """
