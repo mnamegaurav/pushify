@@ -6,13 +6,13 @@ from django.urls import reverse_lazy
 
 from websites.models import Website
 from websites.forms import WebsiteForm
-from websites.mixins import QuerySetMixin
+from websites.mixins import PermissionQuerySetMixin
 
 # Create your views here.
 
 
 class WebsiteAddView(
-    LoginRequiredMixin, SuccessMessageMixin, QuerySetMixin, CreateView
+    LoginRequiredMixin, SuccessMessageMixin, PermissionQuerySetMixin, CreateView
 ):
     model = Website
     template_name = "websites/website_add_form.html"
@@ -25,7 +25,7 @@ class WebsiteAddView(
 
 
 class WebsiteEditView(
-    LoginRequiredMixin, SuccessMessageMixin, QuerySetMixin, UpdateView
+    LoginRequiredMixin, SuccessMessageMixin, PermissionQuerySetMixin, UpdateView
 ):
     model = Website
     template_name = "websites/website_edit_form.html"
@@ -40,7 +40,7 @@ class WebsiteEditView(
 
 
 class WebsiteDeleteView(
-    LoginRequiredMixin, SuccessMessageMixin, QuerySetMixin, DeleteView
+    LoginRequiredMixin, SuccessMessageMixin, PermissionQuerySetMixin, DeleteView
 ):
     model = Website
     success_message = "Successfully deleted the website"
@@ -50,7 +50,7 @@ class WebsiteDeleteView(
         return self.get_website_queryset()
 
 
-class WebsitesListView(LoginRequiredMixin, QuerySetMixin, ListView):
+class WebsitesListView(LoginRequiredMixin, PermissionQuerySetMixin, ListView):
     model = Website
     template_name = "websites/websites_list.html"
     extra_context = {"page_title": "My Websites"}

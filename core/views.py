@@ -11,7 +11,7 @@ from django_celery_results.models import TaskResult
 from core.models import Notification
 from core.forms import NotificationForm
 from core.tasks import send_notifications_in_bulk_task
-from core.mixins import QuerySetMixin
+from core.mixins import PermissionQuerySetMixin
 
 # Create your views here.
 
@@ -21,7 +21,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
 
 class NotificationAddView(
-    LoginRequiredMixin, SuccessMessageMixin, QuerySetMixin, CreateView
+    LoginRequiredMixin, SuccessMessageMixin, PermissionQuerySetMixin, CreateView
 ):
     model = Notification
     template_name = "core/notification_add_form.html"
@@ -104,7 +104,7 @@ class NotificationAddView(
         return queryset
 
 
-class NotificationDetailView(LoginRequiredMixin, QuerySetMixin, DetailView):
+class NotificationDetailView(LoginRequiredMixin, PermissionQuerySetMixin, DetailView):
     model = Notification
     template_name = "core/notification_detail.html"
     extra_context = {"page_title": "Notification Detail"}
@@ -114,7 +114,7 @@ class NotificationDetailView(LoginRequiredMixin, QuerySetMixin, DetailView):
         return queryset
 
 
-class NotificationsListView(LoginRequiredMixin, QuerySetMixin, ListView):
+class NotificationsListView(LoginRequiredMixin, PermissionQuerySetMixin, ListView):
     model = Notification
     template_name = "core/notifications_list.html"
     extra_context = {"page_title": "Notifications"}
