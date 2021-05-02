@@ -110,8 +110,7 @@ class NotificationAddView(
             return self.form_invalid(form)
 
     def get_queryset(self):
-        queryset = Notification.objects.filter(created_by=self.request.user)
-        return queryset
+        return self.get_notification_queryset()
 
 
 class NotificationDetailView(LoginRequiredMixin, PermissionQuerySetMixin, DetailView):
@@ -120,8 +119,7 @@ class NotificationDetailView(LoginRequiredMixin, PermissionQuerySetMixin, Detail
     extra_context = {"page_title": "Notification Detail"}
 
     def get_queryset(self):
-        queryset = Notification.objects.filter(created_by=self.request.user)
-        return queryset
+        return self.get_notification_queryset()
 
 
 class NotificationsListView(LoginRequiredMixin, PermissionQuerySetMixin, ListView):
@@ -130,5 +128,4 @@ class NotificationsListView(LoginRequiredMixin, PermissionQuerySetMixin, ListVie
     extra_context = {"page_title": "Notifications"}
 
     def get_queryset(self):
-        queryset = Notification.objects.filter(created_by=self.request.user)
-        return queryset
+        return self.get_notification_queryset()
