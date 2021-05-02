@@ -32,16 +32,16 @@
 
 4. Activate the virtual environment:
 
-    On Linux or Mac or any Unix based system-
+    - On Linux or Mac or any Unix based system-
     
-    ```bash
-    $ source venv/bin/activate
-    ```
+        ```bash
+        $ source venv/bin/activate
+        ```
     
-    On Windows-
-    ```
-    > venv\Scripts\activate
-    ```
+    - On Windows based OS-
+        ```
+        > venv\Scripts\activate
+        ```
 
 5. Now Install the dependecies:
 
@@ -63,18 +63,18 @@
 
 8. Start RabbitMQ server:
 
-    - On Linux based OS:
+    - On Linux or Mac or any Unix based system:
     
-    Install `rabbitmq-server` package in your local system, start the background service by running this command on Linux.
+        Install `rabbitmq-server` package in your local system, start the background service by running this command on Linux.
 
-    ```bash
-    $ sudo systemctl start rabbitmq
-    ```
+        ```bash
+        $ sudo systemctl start rabbitmq
+        ```
 
     - On Windows based OS:
 
-    Please follow this link for setting up the rabbitmq server in your local system.
-    https://www.rabbitmq.com/install-windows.html
+        Please follow this link for setting up the rabbitmq server in your local system.
+        https://www.rabbitmq.com/install-windows.html
 
 9. Run these commands command before starting the development server:
 
