@@ -56,13 +56,12 @@ class Website(models.Model):
 
     def save(self, *args, **kwargs):
         auto_save_current_user(self)
-        # not using this code anymore
-        # if not self.pk:
-        #     try:
-        #         self.slug = slugify(self.title)
-        #     except Exception as e:
-        #         self.slug = f"{slugify(self.title)}-{self.pk}"
-        #     self.domain = urlparse(self.domain).netloc
+        try:
+            self.slug = slugify(self.title)
+        except Exception as e:
+            self.slug = f"{slugify(self.title)}-{self.pk}"
+        # not using this line anymore
+        # self.domain = urlparse(self.domain).netloc
         return super().save(*args, **kwargs)
 
     def get_absolute_url(self):
