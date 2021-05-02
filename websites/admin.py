@@ -7,7 +7,7 @@ from websites.models import Website
 class WebsiteAdmin(admin.ModelAdmin):
     model = Website
     list_display = (
-        "domain",
+        "url",
         "title",
         "created_by",
         "updated_by",

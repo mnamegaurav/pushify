@@ -13,8 +13,7 @@ User = get_user_model()
 
 # Create your models here.
 class Website(models.Model):
-    domain = models.CharField(
-        max_length=255,
+    url = models.URLField(
         verbose_name=_("Website URL"),
         help_text=_("Website URL i.e. - https://example.com/"),
         unique=True,
@@ -53,15 +52,17 @@ class Website(models.Model):
         ordering = ("-created_on",)
 
     def __str__(self):
-        return self.domain
+        return self.url
 
     def save(self, *args, **kwargs):
         auto_save_current_user(self)
-        try:
-            self.slug = slugify(self.title)
-        except Exception as e:
-            self.slug = f"{slugify(self.title)}-{self.pk}"
-        self.domain = urlparse(self.domain).netloc
+        # not using this code anymore
+        # if not self.pk:
+        #     try:
+        #         self.slug = slugify(self.title)
+        #     except Exception as e:
+        #         self.slug = f"{slugify(self.title)}-{self.pk}"
+        #     self.domain = urlparse(self.domain).netloc
         return super().save(*args, **kwargs)
 
     def get_absolute_url(self):

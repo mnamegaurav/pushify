@@ -91,7 +91,6 @@ class DeviceViewSetMixin(object):
     lookup_field = "registration_id"
 
     def perform_create(self, serializer):
-        client_origin = self.request._request.META.get("HTTP_ORIGIN")
 
         if self.request.user.is_authenticated:
             if SETTINGS["ONE_DEVICE_PER_USER"] and self.request.data.get(
@@ -102,9 +101,10 @@ class DeviceViewSetMixin(object):
                 )
             return serializer.save(user=self.request.user)
 
+        client_origin = self.request._request.META.get("HTTP_ORIGIN")
         if client_origin:
-            client_domain = urlparse(client_origin).netloc
-            client_website = Website.objects.filter(domain=client_domain)
+            # client_domain = urlparse(client_origin).netloc
+            client_website = Website.objects.filter(url__contains=client_origin)
             return serializer.save(website=client_website[0] or None)
 
         return serializer.save()
