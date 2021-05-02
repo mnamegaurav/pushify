@@ -8,5 +8,6 @@ from core.utils import send_notifications_in_bulk
 def send_notifications_in_bulk_task(website_id, *args, **kwargs):
 
     response = send_notifications_in_bulk(website_id, *args, **kwargs)
+    print(response)
 
     return

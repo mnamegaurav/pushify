@@ -5,6 +5,8 @@ from django.urls import reverse_lazy
 
 from fcm_django.models import AbstractFCMDevice
 
+from celery.result import AsyncResult
+
 from django_celery_results.models import TaskResult
 
 from accounts.utils import auto_save_current_user
@@ -29,9 +31,7 @@ class Notification(models.Model):
     failure_count = models.PositiveBigIntegerField(
         verbose_name=_("Failed to Sent Count"), default=0, editable=False
     )
-    task_result = models.ForeignKey(
-        TaskResult, on_delete=models.CASCADE, null=True, blank=True
-    )
+    celery_task_id = models.TextField(null=True, blank=True, editable=False)
     created_by = models.ForeignKey(
         User,
         related_name="notification_cb",
@@ -70,9 +70,12 @@ class Notification(models.Model):
 
     @property
     def status(self):
-        if self.task_result:
-            return self.task_result.get_status_display()
-        return None
+        try:
+            res = AsyncResult(self.celery_task_id)
+            status = res.state
+        except Exception as e:
+            status = "UNKNOWN"
+        return status
 
 
 class FCMTokenDevice(AbstractFCMDevice):

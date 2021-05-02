@@ -73,12 +73,9 @@ class NotificationAddView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 
             # send the task to celery
             task_id = self.push_celery_task(form)
-            # print(task_id)
-            # if task_id:
-            #     # get the task status and save in form
-            #     task_result = TaskResult.objects.filter(task_id=task_id)[0]
-            #     # expecting that later in form_valid save() method will be called
-            #     form.instance.task_result = task_result
+
+            # save the task id into database
+            form.instance.celery_task_id = task_id
 
             return self.form_valid(form)
         else:
