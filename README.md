@@ -14,7 +14,7 @@
 
 ### Set this project locally :computer:
 
-1. Go to the [project repo](https://github.com/) and clone it or download the zip file.<br>
+1. Clone this repository or download the zip file.<br>
 
 2. Go inside the project root directory.
   
