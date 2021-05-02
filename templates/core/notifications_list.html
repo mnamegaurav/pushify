@@ -35,7 +35,12 @@
                 <td>{{ notification_obj.status }}</td>
                 <td>{{ notification_obj.website }}</td>
                 <td>{{ notification_obj.created_on }}</td>
-                <td><a class="btn btn-sm shadow-sm nav-link" href={% url 'core:notification_detail_view' notification_obj.pk  %}>View</a></td>
+                <td class="text-center">
+                  <a class="btn btn-sm shadow-sm" href="{% url 'core:notification_detail_view' notification_obj.pk  %}">View</a>
+                  <a class="btn btn-sm shadow-sm" href="{% url 'core:notification_add_view' %}?notification_id={{ notification_obj.pk }}">
+                    <i class="fas fa-copy mr-1"></i>Resent
+                  </a>
+                </td>
               </tr>
               {% endfor %}
             </tbody>

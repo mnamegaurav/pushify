@@ -3,6 +3,8 @@ from django.views.generic import CreateView, ListView, DetailView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
+from django.forms.models import model_to_dict
+from django.core.exceptions import ObjectDoesNotExist
 
 from django_celery_results.models import TaskResult
 
@@ -62,6 +64,17 @@ class NotificationAddView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
             print(f"Error Executing the send notification task: \n{e}")
 
         return None
+
+    def get(self, request, *args, **kwargs):
+        query_notification_id = request.GET.get("notification_id")
+        if query_notification_id:
+            try:
+                notification_obj = Notification.objects.get(pk=query_notification_id)
+                notification_obj_dict = model_to_dict(notification_obj)
+                self.initial = notification_obj_dict
+            except ObjectDoesNotExist:
+                pass
+        return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         """
