@@ -31,26 +31,20 @@ class NotificationAddView(
     extra_context = {"page_title": "Add Notification"}
     success_message = "Notifications are in queue, we are just sending it."
 
-    def push_celery_task(self, form):
+    def push_celery_task(self, instance):
         # send this data to the notification task
-        website_id = form.instance.website.pk
-        title = form.instance.title
-        body = form.instance.body
-
-        if form.instance.launch_url:
-            launch_url = form.instance.launch_url
-        else:
-            launch_url = None
-
-        if form.instance.icon:
-            icon_url = form.instance.icon.url
-        else:
-            icon_url = None
-
-        if form.instance.banner:
-            banner_url = form.instance.banner.url
-        else:
-            banner_url = None
+        website_id = instance.website.pk
+        title = instance.title
+        body = instance.body
+        icon_url = (
+            self.request.build_absolute_uri(instance.icon.url) if instance.icon else ""
+        )
+        banner_url = (
+            self.request.build_absolute_uri(instance.banner.url)
+            if instance.banner
+            else ""
+        )
+        launch_url = instance.launch_url if instance.launch_url else ""
 
         try:
             task = send_notifications_in_bulk_task.apply_async(
@@ -63,7 +57,6 @@ class NotificationAddView(
                     "banner_url": banner_url,
                 },
             )
-            print(f"sent the notification booyah! {task.state}")
             return task.id
         except Exception as e:
             print(f"Error Executing the send notification task: \n{e}")
@@ -100,7 +93,7 @@ class NotificationAddView(
         if form.is_valid():
 
             # send the task to celery
-            task_id = self.push_celery_task(form)
+            task_id = self.push_celery_task(form.instance)
 
             # save the task id into database
             form.instance.celery_task_id = task_id

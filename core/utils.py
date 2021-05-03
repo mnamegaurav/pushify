@@ -1,19 +1,20 @@
-from core.models import FCMTokenDevice
+from core.models import FCMTokenDevice, Notification
 
 
 def send_notifications_in_bulk(website_id, *args, **kwargs):
 
     # collect all the kwargs
-    notification_title = kwargs.get("title", "")
-    notification_body = kwargs.get("body", "")
-    notification_icon_url = kwargs.get("icon_url", "")
-    notification_banner_url = kwargs.get("banner_url", "")
-    notification_launch_url = kwargs.get("launch_url", "")
+    title = kwargs.get("title", "")
+    body = kwargs.get("body", "")
+    icon_url = kwargs.get("icon_url", "")
+    banner_url = kwargs.get("banner_url", "")
+    launch_url = kwargs.get("launch_url", "")
 
     # prepare data dict for fcm notifications(messages)
-    notification_data = {
-        "image": notification_banner_url,
-        "launch_url": notification_launch_url,
+    data = {
+        "image_url": banner_url,
+        "launch_url": launch_url,
+        "icon_url": icon_url,
     }
 
     # curate all the tokens of this website
@@ -21,10 +22,10 @@ def send_notifications_in_bulk(website_id, *args, **kwargs):
 
     # send finals notifications in bulk mode
     response = fcm_token_devices.send_message(
-        title=notification_title,
-        body=notification_body,
-        icon=notification_icon_url,
-        data=notification_data,
+        title=title,
+        body=body,
+        icon=icon_url,
+        data=data,
     )
 
     return response
