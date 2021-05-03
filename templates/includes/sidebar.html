@@ -41,7 +41,7 @@
     <div id="websiteManagementCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Manage:</h6>
-        <a class="collapse-item" href="{% url 'websites:website_add_view' %}">Add Website</a>
+        {% comment %} <a class="collapse-item" href="{% url 'websites:website_add_view' %}">Add Website</a> {% endcomment %}
         <a class="collapse-item" href="{% url 'websites:websites_list_view' %}">Show All Website</a>
       </div>
     </div>
