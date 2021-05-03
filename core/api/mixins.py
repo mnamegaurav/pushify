@@ -105,7 +105,9 @@ class DeviceViewSetMixin(object):
         if client_origin:
             # client_domain = urlparse(client_origin).netloc
             client_website = Website.objects.filter(url__contains=client_origin)
-            return serializer.save(website=client_website[0] or None)
+
+            if client_website.count() >= 1:
+                return serializer.save(website=client_website[0])
 
         return serializer.save()
 
