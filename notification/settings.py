@@ -28,6 +28,8 @@ if os.path.isfile(dotenv_file):
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ["SECRET_KEY"]
 
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
 
 # Application definition
 
@@ -160,6 +162,32 @@ from notification.fcm_django_config import *
 from notification.drf_config import *
 from notification.celery_config import *
 
+if DEBUG:
+    # All the settings when project is running locally
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
+
+    MIDDLEWARE.extend(
+        [
+            "debug_toolbar.middleware.DebugToolbarMiddleware",
+        ]
+    )
+
+    INSTALLED_APPS.extend(
+        [
+            "django_extensions",
+            "debug_toolbar",
+        ]
+    )
+
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"
+
+
 """
 If you are running locally-
     1. Create a 'local_settings.py' in the same location of 'settings.py'
@@ -169,29 +197,3 @@ try:
     from notification.local_settings import *
 except ImportError as e:
     from notification.prod_settings import *
-
-if DEBUG:
-    # All the settings when project is running locally
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
-    MIDDLEWARE.extend(
-        [
-            "debug_toolbar.middleware.DebugToolbarMiddleware",
-        ]
-    )
-    INSTALLED_APPS.extend(
-        [
-            "django_extensions",
-            "debug_toolbar",
-        ]
-    )
-    # INTERNAL_IPS = [
-    #     "127.0.0.1",
-    # ]
-
-
-CRISPY_TEMPLATE_PACK = "bootstrap4"
