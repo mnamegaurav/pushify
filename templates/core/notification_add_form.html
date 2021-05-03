@@ -13,7 +13,7 @@
 <!-- Content Row -->
 <div class="row">
     <div class="col-12 col-md-8 offset-md-2">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <p class="text-muted"><small>* Required fields</small></p>
             {% csrf_token %}
             {{ form|crispy }}

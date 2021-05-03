@@ -15,6 +15,7 @@ from websites.models import Website
 
 User = get_user_model()
 
+
 # Create your models here.
 class Notification(models.Model):
     website = models.ForeignKey(
@@ -22,8 +23,14 @@ class Notification(models.Model):
     )
     title = models.CharField(max_length=300, verbose_name=_("Notification Title"))
     body = models.TextField(verbose_name=_("Notification Body"))
-    icon = models.ImageField(upload_to="notification_icons", null=True, blank=True)
-    banner = models.ImageField(upload_to="notification_banner", null=True, blank=True)
+    icon = models.ImageField(
+        upload_to=f"notification_icons/%Y/%m/%d/",
+        null=True,
+        blank=True,
+    )
+    banner = models.ImageField(
+        upload_to=f"notification_banner/%Y/%m/%d/", null=True, blank=True
+    )
     launch_url = models.URLField(max_length=500, null=True, blank=True)
     success_count = models.PositiveBigIntegerField(
         verbose_name=_("Successfully Sent Count"), default=0, editable=False
