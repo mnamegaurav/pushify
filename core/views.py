@@ -84,23 +84,19 @@ class NotificationAddView(
                 pass
         return initial
 
-    def post(self, request, *args, **kwargs):
-        """
-        Handle POST requests: instantiate a form instance with the passed
-        POST variables and then check if it's valid.
-        """
-        form = self.get_form()
-        if form.is_valid():
+    def form_valid(self, form):
+        response = super().form_valid(form)
 
-            # send the task to celery
-            task_id = self.push_celery_task(form.instance)
+        # send the task to celery
+        task_id = self.push_celery_task(form.instance)
 
-            # save the task id into database
-            form.instance.celery_task_id = task_id
+        # save the task id into database
+        form.instance.celery_task_id = task_id
 
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
+        # again save the instance
+        form.instance.save(update_fields=["celery_task_id"])
+
+        return response
 
     def get_queryset(self):
         return self.get_notification_queryset()

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
     # Third party apps
     "rest_framework",
     "corsheaders",
@@ -150,6 +151,8 @@ CACHES = {
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = "emails"  # change this to a proper location
+
+SITE_ID = 1
 
 # Other Settings and Configs
 from notification.jazzmin_config import *

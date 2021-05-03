@@ -1,5 +1,3 @@
-from django.core.exceptions import ObjectDoesNotExist
-
 from celery import shared_task, current_task
 
 from core.models import Notification
@@ -17,9 +15,7 @@ def send_notifications_in_bulk_task(website_id, *args, **kwargs):
         notification_obj.success_count = response.get("success", 0)
         notification_obj.failure_count = response.get("failure", 0)
         notification_obj.save(update_fields=["success_count", "failure_count"])
-    except ObjectDoesNotExist:
-        pass
     except Exception as e:
-        print("Exception in Tasks: ", e)
+        raise e
 
     return

@@ -1,4 +1,4 @@
-from core.models import FCMTokenDevice, Notification
+from core.models import FCMTokenDevice
 
 
 def send_notifications_in_bulk(website_id, *args, **kwargs):
