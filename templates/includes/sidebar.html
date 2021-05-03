@@ -1,3 +1,12 @@
+{% url 'core:home_view' as home_view %} 
+{% url 'websites:website_add_view' as website_add_view %} 
+{% url 'websites:websites_list_view' as websites_list_view %} 
+{% url 'core:notification_add_view' as notification_add_view %} 
+{% url 'core:notifications_list_view' as notifications_list_view %} 
+{% url 'core:instructions_view' as instructions_view %} 
+
+
+
 <!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
   <!-- Sidebar - Brand -->
@@ -12,7 +21,7 @@
   <hr class="sidebar-divider my-0" />
 
   <!-- Nav Item - Home -->
-  <li class="nav-item active">
+  <li class="nav-item {% if request.path == home_view %}active{% endif %}">
     <a class="nav-link" href="{% url 'core:home_view' %}">
       <i class="fas fa-fw fa-tachometer-alt"></i>
       <span>Home</span></a
@@ -38,11 +47,11 @@
       <i class="fab fa-fw fa-safari"></i>
       <span>Websites</span>
     </a>
-    <div id="websiteManagementCollapse" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+    <div id="websiteManagementCollapse" class="collapse {% if request.path == website_add_view or request.path == websites_list_view %}show{% endif %}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Manage:</h6>
-        {% comment %} <a class="collapse-item" href="{% url 'websites:website_add_view' %}">Add Website</a> {% endcomment %}
-        <a class="collapse-item" href="{% url 'websites:websites_list_view' %}">Show All Website</a>
+        {% comment %} <a class="collapse-item {% if request.path == website_add_view %}active{% endif %}" href="{% url 'websites:website_add_view' %}">Add Website</a> {% endcomment %}
+        <a class="collapse-item {% if request.path == websites_list_view %}active{% endif %}" href="{% url 'websites:websites_list_view' %}">Show All Website</a>
       </div>
     </div>
   </li>
@@ -62,14 +71,14 @@
     </a>
     <div
       id="notificationManagementCollapse"
-      class="collapse"
+      class="collapse {% if request.path == notification_add_view or request.path == notifications_list_view %}show{% endif %}"
       aria-labelledby="headingTwo"
       data-parent="#accordionSidebar"
     >
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Manage:</h6>
-        <a class="collapse-item" href="{% url 'core:notification_add_view' %}">Create Notification</a>
-        <a class="collapse-item" href="{% url 'core:notifications_list_view' %}">Show All Notification</a>
+        <a class="collapse-item {% if request.path == notification_add_view %}active{% endif %}" href="{% url 'core:notification_add_view' %}">Create Notification</a>
+        <a class="collapse-item {% if request.path == notifications_list_view %}active{% endif %}" href="{% url 'core:notifications_list_view' %}">Show All Notification</a>
       </div>
     </div>
   </li>
@@ -81,7 +90,7 @@
   <div class="sidebar-heading">Help</div>
 
   <!-- Nav Item - Tables -->
-  <li class="nav-item">
+  <li class="nav-item {% if request.path == instructions_view %}active{% endif %}">
     <a class="nav-link" href="{% url 'core:instructions_view' %}">
       <i class="fas fa-fw fa-table"></i>
       <span>Instructions</span></a
