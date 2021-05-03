@@ -20,6 +20,6 @@ def send_notifications_in_bulk_task(website_id, *args, **kwargs):
     except ObjectDoesNotExist:
         pass
     except Exception as e:
-        print(e)
+        print("Exception in Tasks: ", e)
 
     return

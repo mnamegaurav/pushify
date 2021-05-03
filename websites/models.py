@@ -50,7 +50,7 @@ class Website(models.Model):
         ordering = ("-created_on",)
 
     def __str__(self):
-        return self.url
+        return self.title
 
     def save(self, *args, **kwargs):
         auto_save_current_user(self)
