@@ -31,9 +31,13 @@
             style=""
           >
             <div class="dropdown-header">Actions:</div>
+
+            {% if request.user.is_superuser %}
             <a class="dropdown-item" href="{% url 'websites:website_edit_view' website_obj.slug %}">Edit</a>
             <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#websiteDeleteModal{{ website_obj.pk }}">Delete</a>
             <div class="dropdown-divider"></div>
+            {% endif %}
+
             <a class="dropdown-item" href="javascript:void(0)">Help ?</a>
           </div>
         </div>

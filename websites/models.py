@@ -25,9 +25,9 @@ class Website(models.Model):
     is_active = models.BooleanField(default=True)
     created_by = models.ForeignKey(
         User,
+        verbose_name="User",
         related_name="website_cb",
         on_delete=models.CASCADE,
-        editable=False,
         blank=True,
         null=True,
         default=None,

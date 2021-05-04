@@ -50,7 +50,9 @@
     <div id="websiteManagementCollapse" class="collapse {% if request.path == website_add_view or request.path == websites_list_view %}show{% endif %}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Manage:</h6>
-        {% comment %} <a class="collapse-item {% if request.path == website_add_view %}active{% endif %}" href="{% url 'websites:website_add_view' %}">Add Website</a> {% endcomment %}
+        {% if request.user.is_superuser %}
+        <a class="collapse-item {% if request.path == website_add_view %}active{% endif %}" href="{% url 'websites:website_add_view' %}">Add Website</a>
+        {% endif %}
         <a class="collapse-item {% if request.path == websites_list_view %}active{% endif %}" href="{% url 'websites:websites_list_view' %}">Show All Website</a>
       </div>
     </div>
