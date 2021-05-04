@@ -102,12 +102,19 @@ class DeviceViewSetMixin(object):
             return serializer.save(user=self.request.user)
 
         client_origin = self.request._request.META.get("HTTP_ORIGIN")
+
         if client_origin:
             # client_domain = urlparse(client_origin).netloc
             client_website = Website.objects.filter(url__contains=client_origin)
 
-            if client_website.count() >= 1:
+            if client_website.count() == 1:
                 return serializer.save(website=client_website[0])
+            else:
+                raise ValidationError(
+                    {"error": "Something is wrong(Website unavailable)"}
+                )
+        else:
+            raise ValidationError({"error": "You are not allowed(Origin unavailable)"})
 
         return serializer.save()
 
