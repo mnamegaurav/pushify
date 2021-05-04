@@ -11,7 +11,12 @@ from django.contrib.auth.views import (
     PasswordChangeDoneView,
 )
 
-from accounts.views import CustomLoginView, RegisterView, CustomLogoutView
+from accounts.views import (
+    UserProfileView,
+    CustomLoginView,
+    RegisterView,
+    CustomLogoutView,
+)
 
 app_name = "accounts"
 
@@ -20,6 +25,11 @@ urlpatterns = [
         "",
         CustomLoginView.as_view(),
         name="login_view",
+    ),
+    path(
+        "profile/",
+        UserProfileView.as_view(),
+        name="user_profile_view",
     ),
     path(
         "register/",

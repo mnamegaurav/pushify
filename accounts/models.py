@@ -14,6 +14,7 @@ class User(AbstractUser):
     username = models.CharField(
         max_length=50,
         verbose_name=_("Username"),
+        help_text="Username should be unique.",
         unique=True,
         validators=(MinLengthValidator(settings.MIN_USERNAME_LENGTH),),
         null=True,
