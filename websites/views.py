@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
 from websites.models import Website
@@ -13,7 +13,6 @@ from websites.mixins import PermissionQuerySetMixin
 
 class WebsiteAddView(
     LoginRequiredMixin,
-    UserPassesTestMixin,
     SuccessMessageMixin,
     PermissionQuerySetMixin,
     CreateView,
@@ -24,16 +23,12 @@ class WebsiteAddView(
     extra_context = {"page_title": "Add Website"}
     success_message = "Successfully added the website"
 
-    def test_func(self):
-        return self.request.user.is_superuser
-
     def get_queryset(self):
         return self.get_website_queryset()
 
 
 class WebsiteEditView(
     LoginRequiredMixin,
-    UserPassesTestMixin,
     SuccessMessageMixin,
     PermissionQuerySetMixin,
     UpdateView,
@@ -46,16 +41,12 @@ class WebsiteEditView(
     extra_context = {"page_title": "Website Details"}
     success_message = "Successfully saved the changes"
 
-    def test_func(self):
-        return self.request.user.is_superuser
-
     def get_queryset(self):
         return self.get_website_queryset()
 
 
 class WebsiteDeleteView(
     LoginRequiredMixin,
-    UserPassesTestMixin,
     SuccessMessageMixin,
     PermissionQuerySetMixin,
     DeleteView,
@@ -63,9 +54,6 @@ class WebsiteDeleteView(
     model = Website
     success_message = "Successfully deleted the website"
     success_url = reverse_lazy("websites:websites_list_view")
-
-    def test_func(self):
-        return self.request.user.is_superuser
 
     def get_queryset(self):
         return self.get_website_queryset()
