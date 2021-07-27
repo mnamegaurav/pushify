@@ -16,7 +16,6 @@ from pathlib import Path
 
 # Other Settings and Configs
 from pushify.jazzmin_config import *
-from pushify.fcm_django_config import *
 from pushify.drf_config import *
 from pushify.celery_config import *
 
@@ -167,6 +166,22 @@ CORS_ALLOW_ALL_ORIGINS = False
 # CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
+
+# fcm django settings
+FCM_DJANGO_SETTINGS = {
+    # default: _('FCM Django')
+    "APP_VERBOSE_NAME": "FCM Django Notifications",
+    # Your firebase API KEY
+    "FCM_SERVER_KEY": os.environ["FCM_SERVER_KEY"],
+    # true if you want to have only one active device per registered user at a time
+    # default: False
+    "ONE_DEVICE_PER_USER": False,
+    # devices to which notifications cannot be sent,
+    # are deleted upon receiving error response from FCM
+    # default: False
+    "DELETE_INACTIVE_DEVICES": False,
+}
+
 
 """
 If you are running locally-
