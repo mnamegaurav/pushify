@@ -182,6 +182,7 @@ FCM_DJANGO_SETTINGS = {
     "DELETE_INACTIVE_DEVICES": False,
 }
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 """
 If you are running locally-
@@ -207,11 +208,9 @@ if DEBUG:
 
     ALLOWED_HOSTS = ["*"]
 
-    MIDDLEWARE.extend(
-        [
-            "debug_toolbar.middleware.DebugToolbarMiddleware",
-        ]
-    )
+    MIDDLEWARE.extend([
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
+    ])
 
     INSTALLED_APPS.extend(
         [
@@ -224,6 +223,8 @@ if DEBUG:
         "127.0.0.1",
     ]
 else:
+    ALLOWED_HOSTS = ["mnamegaurav-pushify.herokuapp.com", "*"]
+
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
