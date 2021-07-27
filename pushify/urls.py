@@ -20,7 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.shortcuts import render
 
-from notification.routers import router
+from pushify.routers import router
 
 
 urlpatterns = [
