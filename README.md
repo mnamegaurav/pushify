@@ -1,4 +1,4 @@
-# Push Notification System
+# Pushify Notification System
 
 ## Features :information_source: 
 

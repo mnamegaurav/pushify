@@ -49,7 +49,7 @@ messaging.onBackgroundMessage((payload)=>{
 // [END background_handler]
 
 
-// Code added from old aplustopper project
+// Code added from old Pushify project
 self.addEventListener("notificationclick", (event)=>{
   console.log("On notification click: ", event);
 
